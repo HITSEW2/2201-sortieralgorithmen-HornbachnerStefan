@@ -39,22 +39,28 @@ public class Main {
 
 
         //Ausgabe unsortiert
+        System.out.println("-----Selction Sort-----");
+        System.out.println("Unsortiert:");
         ausgabe(namen);
 
         //Selection Sort
         selectionSort(namen);
 
         //Ausgabe sortiert
+        System.out.println("Sortiert");
         ausgabe(namen);
 
 
         //Ausgabe unsortiert
+        System.out.println("----Quick Sort----");
+        System.out.println("Unsortiert:");
         ausgabe2(namen2);
 
         //Quick Sort
-        quickSort(namen2);
+        quickSort(namen2, 0, namen2.length - 1);
 
         //Ausgabe sortiert
+        System.out.println("Sortiert");
         ausgabe2(namen2);
 
     }
@@ -66,6 +72,7 @@ public class Main {
         }
 
         System.out.println(" ");
+        System.out.println("---------------------------------------------");
     }
 
     public static void ausgabe2(String[] namen2){
@@ -75,7 +82,10 @@ public class Main {
         }
 
         System.out.println(" ");
+        System.out.println("-------------------------------------------");
     }
+
+
 
 //namen[min] > namen[j]
     public static void selectionSort(String[] namen){
@@ -83,7 +93,7 @@ public class Main {
         for (int i = 0; i < namen.length - 1; i++) {
 
             int min = i;
-            for (int j = 0; j < namen.length; j++) {
+            for (int j = i + 1; j < namen.length; j++) {
 
                 if (namen[min].compareToIgnoreCase(namen[j]) > 0) min = j;
             }
@@ -94,13 +104,46 @@ public class Main {
             namen[min] = temp;
         }
 
-        System.out.println(namen.length);
-
 
     }
 
-    public static void quickSort(String[] namen2){
+
+
+    public static void quickSort(String[] namen2, int start, int end){
+
+        if (end <= start) return; //base Case
+
+        int pivot = partition(namen2, start, end);
+        quickSort(namen2, start, pivot - 1);
+        quickSort(namen2, pivot + 1, end);
 
     }
+
+
+
+    public static int partition(String[] namen2, int start, int end){
+
+        String pivot = namen2[end];
+        int i = start - 1;
+
+        for (int j = start; j <= end - 1; j++) {
+
+            if (namen2[j].compareToIgnoreCase(pivot) < 0){
+                i++;
+                String temp = namen2[i];
+                namen2[i] = namen2[j];
+                namen2[j] = temp;
+            }
+
+        }
+        i++;
+        String temp = namen2[i];
+        namen2[i] = namen2[end];
+        namen2[end] = temp;
+
+        return i;
+
+    }
+
 
 }
